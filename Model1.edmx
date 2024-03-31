@@ -1,0 +1,338 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Хранилище BookSystemModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Authors">
+          <Key>
+            <PropertyRef Name="ID_Author" />
+          </Key>
+          <Property Name="ID_Author" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="AuthorSurname" Type="varchar" MaxLength="50" />
+          <Property Name="AuthorName" Type="varchar" MaxLength="50" />
+          <Property Name="AuthorMiddleName" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="BookLoans">
+          <Key>
+            <PropertyRef Name="ID_Loan" />
+          </Key>
+          <Property Name="ID_Loan" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Book_ID" Type="int" />
+          <Property Name="Reader_ID" Type="int" />
+          <Property Name="LoanDate" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="ReturnDate" Type="varchar" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="Books">
+          <Key>
+            <PropertyRef Name="ID_Book" />
+          </Key>
+          <Property Name="ID_Book" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Title" Type="varchar" MaxLength="100" />
+          <Property Name="Author_ID" Type="int" />
+          <Property Name="Genre_ID" Type="int" />
+          <Property Name="PublishDate" Type="varchar" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="Genres">
+          <Key>
+            <PropertyRef Name="ID_Genre" />
+          </Key>
+          <Property Name="ID_Genre" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Genre" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Readers">
+          <Key>
+            <PropertyRef Name="ID_Reader" />
+          </Key>
+          <Property Name="ID_Reader" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ReaderSurname" Type="varchar" MaxLength="50" />
+          <Property Name="ReaderName" Type="varchar" MaxLength="50" />
+          <Property Name="ReaderMiddleName" Type="varchar" MaxLength="50" />
+          <Property Name="DateOfBirth" Type="date" />
+          <Property Name="Email" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <Association Name="FK__BookLoans__Book___5441852A">
+          <End Role="Books" Type="Self.Books" Multiplicity="0..1" />
+          <End Role="BookLoans" Type="Self.BookLoans" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Books">
+              <PropertyRef Name="ID_Book" />
+            </Principal>
+            <Dependent Role="BookLoans">
+              <PropertyRef Name="Book_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__BookLoans__Reade__5535A963">
+          <End Role="Readers" Type="Self.Readers" Multiplicity="0..1" />
+          <End Role="BookLoans" Type="Self.BookLoans" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Readers">
+              <PropertyRef Name="ID_Reader" />
+            </Principal>
+            <Dependent Role="BookLoans">
+              <PropertyRef Name="Reader_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Books__Author_ID__5165187F">
+          <End Role="Authors" Type="Self.Authors" Multiplicity="0..1" />
+          <End Role="Books" Type="Self.Books" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Authors">
+              <PropertyRef Name="ID_Author" />
+            </Principal>
+            <Dependent Role="Books">
+              <PropertyRef Name="Author_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Books__Genre_ID__5070F446">
+          <End Role="Genres" Type="Self.Genres" Multiplicity="0..1" />
+          <End Role="Books" Type="Self.Books" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Genres">
+              <PropertyRef Name="ID_Genre" />
+            </Principal>
+            <Dependent Role="Books">
+              <PropertyRef Name="Genre_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Хранилище BookSystemModelContainer">
+          <EntitySet Name="Authors" EntityType="Self.Authors" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="BookLoans" EntityType="Self.BookLoans" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Books" EntityType="Self.Books" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Genres" EntityType="Self.Genres" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Readers" EntityType="Self.Readers" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__BookLoans__Book___5441852A" Association="Self.FK__BookLoans__Book___5441852A">
+            <End Role="Books" EntitySet="Books" />
+            <End Role="BookLoans" EntitySet="BookLoans" />
+          </AssociationSet>
+          <AssociationSet Name="FK__BookLoans__Reade__5535A963" Association="Self.FK__BookLoans__Reade__5535A963">
+            <End Role="Readers" EntitySet="Readers" />
+            <End Role="BookLoans" EntitySet="BookLoans" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Books__Author_ID__5165187F" Association="Self.FK__Books__Author_ID__5165187F">
+            <End Role="Authors" EntitySet="Authors" />
+            <End Role="Books" EntitySet="Books" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Books__Genre_ID__5070F446" Association="Self.FK__Books__Genre_ID__5070F446">
+            <End Role="Genres" EntitySet="Genres" />
+            <End Role="Books" EntitySet="Books" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="BookSystemModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Authors">
+          <Key>
+            <PropertyRef Name="ID_Author" />
+          </Key>
+          <Property Name="ID_Author" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AuthorSurname" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="AuthorName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="AuthorMiddleName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Books" Relationship="Self.FK__Books__Author_ID__5165187F" FromRole="Authors" ToRole="Books" />
+        </EntityType>
+        <EntityType Name="BookLoans">
+          <Key>
+            <PropertyRef Name="ID_Loan" />
+          </Key>
+          <Property Name="ID_Loan" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Book_ID" Type="Int32" />
+          <Property Name="Reader_ID" Type="Int32" />
+          <Property Name="LoanDate" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ReturnDate" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Books" Relationship="Self.FK__BookLoans__Book___5441852A" FromRole="BookLoans" ToRole="Books" />
+          <NavigationProperty Name="Readers" Relationship="Self.FK__BookLoans__Reade__5535A963" FromRole="BookLoans" ToRole="Readers" />
+        </EntityType>
+        <EntityType Name="Books">
+          <Key>
+            <PropertyRef Name="ID_Book" />
+          </Key>
+          <Property Name="ID_Book" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Title" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Author_ID" Type="Int32" />
+          <Property Name="Genre_ID" Type="Int32" />
+          <Property Name="PublishDate" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Authors" Relationship="Self.FK__Books__Author_ID__5165187F" FromRole="Books" ToRole="Authors" />
+          <NavigationProperty Name="BookLoans" Relationship="Self.FK__BookLoans__Book___5441852A" FromRole="Books" ToRole="BookLoans" />
+          <NavigationProperty Name="Genres" Relationship="Self.FK__Books__Genre_ID__5070F446" FromRole="Books" ToRole="Genres" />
+        </EntityType>
+        <EntityType Name="Genres">
+          <Key>
+            <PropertyRef Name="ID_Genre" />
+          </Key>
+          <Property Name="ID_Genre" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Genre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Books" Relationship="Self.FK__Books__Genre_ID__5070F446" FromRole="Genres" ToRole="Books" />
+        </EntityType>
+        <EntityType Name="Readers">
+          <Key>
+            <PropertyRef Name="ID_Reader" />
+          </Key>
+          <Property Name="ID_Reader" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ReaderSurname" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ReaderName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ReaderMiddleName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="DateOfBirth" Type="DateTime" Precision="0" />
+          <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="BookLoans" Relationship="Self.FK__BookLoans__Reade__5535A963" FromRole="Readers" ToRole="BookLoans" />
+        </EntityType>
+        <Association Name="FK__Books__Author_ID__5165187F">
+          <End Role="Authors" Type="Self.Authors" Multiplicity="0..1" />
+          <End Role="Books" Type="Self.Books" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Authors">
+              <PropertyRef Name="ID_Author" />
+            </Principal>
+            <Dependent Role="Books">
+              <PropertyRef Name="Author_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__BookLoans__Book___5441852A">
+          <End Role="Books" Type="Self.Books" Multiplicity="0..1" />
+          <End Role="BookLoans" Type="Self.BookLoans" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Books">
+              <PropertyRef Name="ID_Book" />
+            </Principal>
+            <Dependent Role="BookLoans">
+              <PropertyRef Name="Book_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__BookLoans__Reade__5535A963">
+          <End Role="Readers" Type="Self.Readers" Multiplicity="0..1" />
+          <End Role="BookLoans" Type="Self.BookLoans" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Readers">
+              <PropertyRef Name="ID_Reader" />
+            </Principal>
+            <Dependent Role="BookLoans">
+              <PropertyRef Name="Reader_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Books__Genre_ID__5070F446">
+          <End Role="Genres" Type="Self.Genres" Multiplicity="0..1" />
+          <End Role="Books" Type="Self.Books" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Genres">
+              <PropertyRef Name="ID_Genre" />
+            </Principal>
+            <Dependent Role="Books">
+              <PropertyRef Name="Genre_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="BookSystemEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Authors" EntityType="Self.Authors" />
+          <EntitySet Name="BookLoans" EntityType="Self.BookLoans" />
+          <EntitySet Name="Books" EntityType="Self.Books" />
+          <EntitySet Name="Genres" EntityType="Self.Genres" />
+          <EntitySet Name="Readers" EntityType="Self.Readers" />
+          <AssociationSet Name="FK__Books__Author_ID__5165187F" Association="Self.FK__Books__Author_ID__5165187F">
+            <End Role="Authors" EntitySet="Authors" />
+            <End Role="Books" EntitySet="Books" />
+          </AssociationSet>
+          <AssociationSet Name="FK__BookLoans__Book___5441852A" Association="Self.FK__BookLoans__Book___5441852A">
+            <End Role="Books" EntitySet="Books" />
+            <End Role="BookLoans" EntitySet="BookLoans" />
+          </AssociationSet>
+          <AssociationSet Name="FK__BookLoans__Reade__5535A963" Association="Self.FK__BookLoans__Reade__5535A963">
+            <End Role="Readers" EntitySet="Readers" />
+            <End Role="BookLoans" EntitySet="BookLoans" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Books__Genre_ID__5070F446" Association="Self.FK__Books__Genre_ID__5070F446">
+            <End Role="Genres" EntitySet="Genres" />
+            <End Role="Books" EntitySet="Books" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище BookSystemModelContainer" CdmEntityContainer="BookSystemEntities">
+          <EntitySetMapping Name="Authors">
+            <EntityTypeMapping TypeName="BookSystemModel.Authors">
+              <MappingFragment StoreEntitySet="Authors">
+                <ScalarProperty Name="ID_Author" ColumnName="ID_Author" />
+                <ScalarProperty Name="AuthorSurname" ColumnName="AuthorSurname" />
+                <ScalarProperty Name="AuthorName" ColumnName="AuthorName" />
+                <ScalarProperty Name="AuthorMiddleName" ColumnName="AuthorMiddleName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="BookLoans">
+            <EntityTypeMapping TypeName="BookSystemModel.BookLoans">
+              <MappingFragment StoreEntitySet="BookLoans">
+                <ScalarProperty Name="ID_Loan" ColumnName="ID_Loan" />
+                <ScalarProperty Name="Book_ID" ColumnName="Book_ID" />
+                <ScalarProperty Name="Reader_ID" ColumnName="Reader_ID" />
+                <ScalarProperty Name="LoanDate" ColumnName="LoanDate" />
+                <ScalarProperty Name="ReturnDate" ColumnName="ReturnDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Books">
+            <EntityTypeMapping TypeName="BookSystemModel.Books">
+              <MappingFragment StoreEntitySet="Books">
+                <ScalarProperty Name="ID_Book" ColumnName="ID_Book" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Author_ID" ColumnName="Author_ID" />
+                <ScalarProperty Name="Genre_ID" ColumnName="Genre_ID" />
+                <ScalarProperty Name="PublishDate" ColumnName="PublishDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Genres">
+            <EntityTypeMapping TypeName="BookSystemModel.Genres">
+              <MappingFragment StoreEntitySet="Genres">
+                <ScalarProperty Name="ID_Genre" ColumnName="ID_Genre" />
+                <ScalarProperty Name="Genre" ColumnName="Genre" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Readers">
+            <EntityTypeMapping TypeName="BookSystemModel.Readers">
+              <MappingFragment StoreEntitySet="Readers">
+                <ScalarProperty Name="ID_Reader" ColumnName="ID_Reader" />
+                <ScalarProperty Name="ReaderSurname" ColumnName="ReaderSurname" />
+                <ScalarProperty Name="ReaderName" ColumnName="ReaderName" />
+                <ScalarProperty Name="ReaderMiddleName" ColumnName="ReaderMiddleName" />
+                <ScalarProperty Name="DateOfBirth" ColumnName="DateOfBirth" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

@@ -82,9 +82,10 @@ namespace practice_2_entities
             {
                 var selected = dg_BD_authors.SelectedItem as Authors;
                     
+                
                 pole1.Text = selected.AuthorSurname.ToString();
                 pole2.Text = selected.AuthorName.ToString();
-                pole3.Text = selected.AuthorMiddleName.ToString();
+                pole3.Text = selected.AuthorMiddleName;
 
                 authors.SaveChanges();
                 dg_BD_authors.ItemsSource = authors.Authors.ToList();
